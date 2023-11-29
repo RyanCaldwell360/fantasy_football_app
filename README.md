@@ -34,7 +34,7 @@ fantasy_football_app/
 
 ## To-Dos
 
-- [ ] Set up Python environment and install YFPY package.
+- [ ] Yahoo developer setup: https://developer.yahoo.com/oauth2/guide/flows_authcode/
 - [ ] Implement basic functionality to fetch data from Yahoo Fantasy API.
 - [ ] Process and format the fetched data for web display.
 - [ ] Set up a basic web server (Flask/Django) for backend API.
@@ -45,6 +45,8 @@ fantasy_football_app/
 ## Getting Started
 
 (Instructions on how to set up the project locally, including environment setup, running the application, etc.)
+
+Needed to modify the token.json to include OAuth2: https://pypi.org/project/yahoo-oauth/
 
 ## Contributing
 
