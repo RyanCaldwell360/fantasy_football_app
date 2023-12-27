@@ -1,6 +1,5 @@
 import pandas as pd
 import streamlit as st
-import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 
 # include separate tabs
