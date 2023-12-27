@@ -1,0 +1,28 @@
+secrets_path: /mnt/c/Users/ryanc/Documents/Projects/Fantasy_Football
+league_id: 244805
+game_code: nfl
+
+###############
+### Seasons ###
+###############
+
+# each season is accompanied with a specific game_id
+# this game_id will be needed for successful requests
+# each game_id will have a league_id associated with it
+# and each league_id will have a specific season year associated with it
+# I entered the league in 2017, so let's only consider that point forward
+games:
+  371:
+    155236: 2017
+  380:
+    51899: 2018
+  390:
+    178933: 2019
+  399:
+    89673: 2020
+  406:
+    41036: 2021
+  414:
+    428168: 2022
+  423:
+    244805: 2023
