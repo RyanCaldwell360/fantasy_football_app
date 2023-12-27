@@ -11,3 +11,4 @@ yfpy
 PyYAML
 pandas
 streamlit
+plotly
