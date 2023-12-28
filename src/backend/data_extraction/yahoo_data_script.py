@@ -1,11 +1,18 @@
 import os
 import sys
+import boto3
+import botocore
 import json
 import yaml
 import time
+import logging
 import pandas as pd
 from pathlib import Path
 from yfpy import YahooFantasySportsQuery
+
+# Set the logging level for boto3 and botocore
+logging.getLogger('boto3').setLevel(logging.ERROR)
+logging.getLogger('botocore').setLevel(logging.ERROR)
 
 # allow imports from utils.py in parent directory
 # Add the parent directory to the Python path
@@ -218,17 +225,18 @@ def main():
     # merge division assignments with matchup results
     results_df = combine_matchups_divisions(results_df, divisions)
     
-    ############################
-    ### write output to disk ###
-    ############################
+    ##############################
+    ### write output to AWS S3 ###
+    ##############################
+    bucket_name = config['file_paths']['bucket_name']
+    division_path = 's3://' + bucket_name + config['file_paths']['division'] + '/divisions.csv'
+    matchup_path = 's3://' + bucket_name + config['file_paths']['matchup'] + '/matchup_results.csv'
 
     # divisions
-    data_path = os.path.join(current_script_dir, 'data/divisions.csv')
-    divisions.to_csv(data_path, header=True, index=False)
+    divisions.to_csv(division_path, header=True, index=False)
 
     # matchup results
-    data_path = os.path.join(current_script_dir, 'data/matchup_results.csv')
-    results_df.to_csv(data_path, header=True, index=False)
+    results_df.to_csv(matchup_path, header=True, index=False)
 
 if __name__ == '__main__':
     main()

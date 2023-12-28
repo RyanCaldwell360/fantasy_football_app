@@ -12,3 +12,7 @@ PyYAML
 pandas
 streamlit
 plotly
+s3fs
+fsspec
+boto3
+botocore

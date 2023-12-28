@@ -1,6 +1,19 @@
+import os
+import sys
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
+
+# allow imports from utils.py in parent directory
+# Add the parent directory to the Python path
+parent_dir = project_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+print(parent_dir)
+sys.path.insert(0, parent_dir)
+from utils import get_yaml
+
+# read in config
+config_file_path = 'src/backend/data_extraction/backend_config.yml'
+config = get_yaml(config_file_path)
 
 # include separate tabs
 # standings
@@ -9,7 +22,9 @@ import plotly.graph_objects as go
 tab1, tab2, tab3 = st.tabs(["Standings", "Playoffs", "Weekly Matchups"])
 
 # matchup data
-matchups = pd.read_csv('./src/backend/data_extraction/data/matchup_results.csv')
+bucket_name = config['file_paths']['bucket_name']
+matchup_path = 's3://' + bucket_name + config['file_paths']['matchup'] + '/matchup_results.csv'
+matchups = pd.read_csv(matchup_path)
 
 with tab1:
     st.header("Standings")
