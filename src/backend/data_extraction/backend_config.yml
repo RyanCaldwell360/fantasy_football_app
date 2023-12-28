@@ -1,3 +1,4 @@
+# YFPY parameters for accessing the Yahoo Fantasy API
 secrets_path: /mnt/c/Users/ryanc/Documents/Projects/Fantasy_Football
 league_id: 244805
 game_code: nfl
@@ -26,3 +27,9 @@ games:
     428168: 2022
   423:
     244805: 2023
+
+# AWS S3 bucket name
+file_paths:
+  bucket_name: yahoo-fantasy-football-app
+  division: /divisions
+  matchup: /matchups
