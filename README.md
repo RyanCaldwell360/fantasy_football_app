@@ -2,37 +2,42 @@
 
 ## Project Overview
 
-This project aims to develop a web application that enables members of our fantasy football league to view historical results, including individual game matchups and overall standings, dating back to the 2020 season. The application will leverage Python, the YFPY package, and web development technologies to fetch, process, and display data in an interactive and user-friendly manner.
+This project aims to develop a web application that enables members of our fantasy football league to view historical results, including individual game matchups and overall standings, dating back to the 2017 season. 2017 is significant only in that I joined that season. I don't care about the leagure prior to that :smiley:. 
+
+
+***Data Access***: This project will rely upon the YFPY [package](https://github.com/uberfastman/yfpy) for access to league data through the Yahoo Fantasy API.
+
+***Frontend UI***: This project will rely upon [streamlit.io](https://streamlit.io/), which makes for quick and easy public access for team consumption
+
+***Backend***: To be determined
 
 ## Goals
 
-- **Data Retrieval**: Fetch historical matchup and standings data from the Yahoo Fantasy Sports API.
-- **Data Presentation**: Display individual game matchups and overall standings for each season since 2020, including playoff results.
-- **User Interface**: Develop an intuitive and engaging user interface for league members to interact with the data.
-- **Scalability and Performance**: Ensure the application can handle growing data and user base efficiently.
+Learn how to build end-to-end system for analytics project. This should be a fun project where I learn a lot! I plan on updating and improving this system over time.
 
 ## Project Structure
 
 ```
 fantasy_football_app/
 ├── .github/
-│ └── workflows/
-│ └── ci_cd.yml
+│   └── workflows/
+│       └── ci_cd.yml
+├── .streamlit/
+│   └── secrets.toml
 ├── src/
-│ ├── backend/
-│ │ └── (Python backend files)
-│ └── frontend/
-│ └── (HTML, CSS, JavaScript files)
-├── docs/
-│ └── (Documentation and resources)
-├── tests/
-│ └── (Unit and integration tests)
+│   ├── backend/
+│   │   └── data_extraction/
+│   │       ├── backend_config.yml
+│   │       └── yahoo_data_script.py
+│   └── frontend/
+│       └── streamlit_app.py
 ├── .gitignore
 ├── requirements.txt
 └── README.md
 ```
 ## Getting Started
 
+#### Yahoo Fantasy API
 This project relies heavily on the [YFPY](https://yfpy.uberfastman.com/index.html) package to access Yahoo fantasy football data. It is a nice python wrapper around the Yahoo API, but requires some setup to access private league's data. The basic process can be followed in 2 steps:
 
 1. Create Yahoo App to generate client id/secret
@@ -84,12 +89,16 @@ You will need to make sure that you set the 'code' key/value pair to the code th
 
 Unfortunately, I found that YFPY was throwing OAuth2 errors until I added the "consumer_key", "consumer_secret" and "token_time" to the token.json file. I somewhat figured this out by finding my way to this site while navigating errors: https://pypi.org/project/yahoo-oauth/
 
+#### Streamlit
+
+* Setup streamlit account
+* Create new app on [streamlit.io](https://streamlit.io/) website once logged on
+    * You will specify this repo to connect to when creating the new app
+    * You can specify the streamlit_app.py file within the main branch
+* When creating the new app, providing AWS S3 credentials (access key/secret) to the app
+    * I created a new user on AWS IAM which has access to S3, and generated new key/secret for streamlit app
+
 ## To-Dos
 
-- [x] Yahoo developer setup: https://developer.yahoo.com/oauth2/guide/flows_authcode/
-- [ ] Implement basic functionality to fetch data from Yahoo Fantasy API.
-- [ ] Process and format the fetched data for web display.
-- [ ] Set up a basic web server (Flask/Django) for backend API.
-- [ ] Design a preliminary frontend interface.
-- [ ] Test data fetching and processing modules.
-- [ ] Deploy a prototype version for user feedback.
+- [ ] create rolling standings by season/week
+- [ ] display rolling standings through plot
