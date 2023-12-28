@@ -1,5 +1,6 @@
 import os
 import sys
+import boto3
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
@@ -7,13 +8,27 @@ import plotly.graph_objects as go
 # allow imports from utils.py in parent directory
 # Add the parent directory to the Python path
 parent_dir = project_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-print(parent_dir)
 sys.path.insert(0, parent_dir)
 from utils import get_yaml
 
 # read in config
 config_file_path = 'src/backend/data_extraction/backend_config.yml'
 config = get_yaml(config_file_path)
+
+# AWS credentials
+aws_access_key_id = st.secrets["aws"]["aws_access_key_id"]
+aws_secret_access_key = st.secrets["aws"]["aws_secret_access_key"]
+
+# permissions
+session = boto3.Session(aws_access_key_id=aws_access_key_id,
+                        aws_secret_access_key=aws_secret_access_key)
+
+# Use the session to interact with S3
+s3 = session.resource('s3')
+
+# Now you can perform operations on this bucket
+bucket_name = config['file_paths']['bucket_name']
+bucket = s3.Bucket(bucket_name)
 
 # include separate tabs
 # standings
@@ -22,9 +37,10 @@ config = get_yaml(config_file_path)
 tab1, tab2, tab3 = st.tabs(["Standings", "Playoffs", "Weekly Matchups"])
 
 # matchup data
-bucket_name = config['file_paths']['bucket_name']
 matchup_path = 's3://' + bucket_name + config['file_paths']['matchup'] + '/matchup_results.csv'
-matchups = pd.read_csv(matchup_path)
+matchups = pd.read_csv(matchup_path, 
+                       storage_options={'key': aws_access_key_id, 
+                                        'secret': aws_secret_access_key})
 
 with tab1:
     st.header("Standings")

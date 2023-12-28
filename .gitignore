@@ -164,3 +164,8 @@ notebooks/
 
 # data
 src/backend/data_extraction/data/
+
+# toml file with AWS credentials
+# used by streamlit app to access
+# AWS S3 bucket
+*.toml
